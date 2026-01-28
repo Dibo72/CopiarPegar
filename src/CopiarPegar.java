@@ -1,15 +1,46 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+public class CopiarPegar {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        System.out.println("Archivo 2");
+        try (BufferedReader lector2 = new BufferedReader(new FileReader("Archivo2.txt"))) {
+            String linea;
+            while ((linea = lector2.readLine()) != null) {
+                System.out.println(linea);
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo Archivo2");
+        }
+
+        try (
+                BufferedReader lector1 = new BufferedReader(new FileReader("Archivo.txt"));
+                BufferedWriter escritor = new BufferedWriter(new FileWriter("Archivo2.txt"))
+        ) {
+            String linea;
+            System.out.println();
+            System.out.println("Archivo 1");
+            while ((linea = lector1.readLine()) != null) {
+                System.out.println(linea);
+                escritor.write(linea);
+                escritor.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error copiando archivos");
+        }
+
+        System.out.println();
+        System.out.println("Archivo 2 copiado");
+        try (BufferedReader lector2 = new BufferedReader(new FileReader("Archivo2.txt"))) {
+            String linea;
+            while ((linea = lector2.readLine()) != null) {
+                System.out.println(linea);
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo Archivo2");
         }
     }
 }
